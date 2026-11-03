@@ -1,0 +1,417 @@
+public abstract interface class net/plumt/growth/update/AppUpdater {
+	public static final field Companion Lnet/plumt/growth/update/AppUpdater$Companion;
+	public abstract fun check (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun create (Landroid/content/Context;)Lnet/plumt/growth/update/AppUpdater;
+	public static fun create (Landroid/content/Context;Lnet/plumt/growth/update/MinimumVersionSource;)Lnet/plumt/growth/update/AppUpdater;
+	public static fun create (Landroid/content/Context;Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/PlayUpdateClient;)Lnet/plumt/growth/update/AppUpdater;
+	public static fun create (Landroid/content/Context;Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/PlayUpdateClient;Lnet/plumt/growth/update/PlayUpdateStrategy;)Lnet/plumt/growth/update/AppUpdater;
+	public static fun create (Landroid/content/Context;Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/PlayUpdateClient;Lnet/plumt/growth/update/PlayUpdateStrategy;Lnet/plumt/growth/update/InstalledVersion;)Lnet/plumt/growth/update/AppUpdater;
+	public abstract fun installStates ()Lkotlinx/coroutines/flow/Flow;
+	public abstract fun start (Landroid/app/Activity;Lnet/plumt/growth/update/UpdateAction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class net/plumt/growth/update/AppUpdater$Companion {
+	public final fun create (Landroid/content/Context;)Lnet/plumt/growth/update/AppUpdater;
+	public final fun create (Landroid/content/Context;Lnet/plumt/growth/update/MinimumVersionSource;)Lnet/plumt/growth/update/AppUpdater;
+	public final fun create (Landroid/content/Context;Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/PlayUpdateClient;)Lnet/plumt/growth/update/AppUpdater;
+	public final fun create (Landroid/content/Context;Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/PlayUpdateClient;Lnet/plumt/growth/update/PlayUpdateStrategy;)Lnet/plumt/growth/update/AppUpdater;
+	public final fun create (Landroid/content/Context;Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/PlayUpdateClient;Lnet/plumt/growth/update/PlayUpdateStrategy;Lnet/plumt/growth/update/InstalledVersion;)Lnet/plumt/growth/update/AppUpdater;
+	public static synthetic fun create$default (Lnet/plumt/growth/update/AppUpdater$Companion;Landroid/content/Context;Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/PlayUpdateClient;Lnet/plumt/growth/update/PlayUpdateStrategy;Lnet/plumt/growth/update/InstalledVersion;ILjava/lang/Object;)Lnet/plumt/growth/update/AppUpdater;
+}
+
+public final class net/plumt/growth/update/DefaultPlayUpdateStrategy : net/plumt/growth/update/PlayUpdateStrategy {
+	public fun <init> ()V
+	public fun <init> (Lnet/plumt/growth/update/DefaultPlayUpdateStrategy$Config;)V
+	public synthetic fun <init> (Lnet/plumt/growth/update/DefaultPlayUpdateStrategy$Config;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun choose (Lnet/plumt/growth/update/PlayUpdateAvailability$Available;)Lnet/plumt/growth/update/PlayUpdateType;
+}
+
+public final class net/plumt/growth/update/DefaultPlayUpdateStrategy$Config {
+	public fun <init> ()V
+	public fun <init> (I)V
+	public fun <init> (ILjava/lang/Integer;)V
+	public fun <init> (ILjava/lang/Integer;I)V
+	public fun <init> (ILjava/lang/Integer;II)V
+	public synthetic fun <init> (ILjava/lang/Integer;IIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun component3 ()I
+	public final fun component4 ()I
+	public final fun copy (ILjava/lang/Integer;II)Lnet/plumt/growth/update/DefaultPlayUpdateStrategy$Config;
+	public static synthetic fun copy$default (Lnet/plumt/growth/update/DefaultPlayUpdateStrategy$Config;ILjava/lang/Integer;IIILjava/lang/Object;)Lnet/plumt/growth/update/DefaultPlayUpdateStrategy$Config;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getFlexibleMinPriority ()I
+	public final fun getFlexibleMinStalenessDays ()I
+	public final fun getImmediateMinPriority ()I
+	public final fun getImmediateMinStalenessDays ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class net/plumt/growth/update/ForceUpdateChecker {
+	public static final field Companion Lnet/plumt/growth/update/ForceUpdateChecker$Companion;
+	public abstract fun check (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun create (Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/InstalledVersion;)Lnet/plumt/growth/update/ForceUpdateChecker;
+}
+
+public final class net/plumt/growth/update/ForceUpdateChecker$Companion {
+	public final fun create (Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/InstalledVersion;)Lnet/plumt/growth/update/ForceUpdateChecker;
+}
+
+public abstract interface class net/plumt/growth/update/ForceUpdateDecision {
+}
+
+public final class net/plumt/growth/update/ForceUpdateDecision$CheckFailed : net/plumt/growth/update/ForceUpdateDecision {
+	public fun <init> (Lnet/plumt/growth/update/UpdateException;)V
+	public final fun component1 ()Lnet/plumt/growth/update/UpdateException;
+	public final fun copy (Lnet/plumt/growth/update/UpdateException;)Lnet/plumt/growth/update/ForceUpdateDecision$CheckFailed;
+	public static synthetic fun copy$default (Lnet/plumt/growth/update/ForceUpdateDecision$CheckFailed;Lnet/plumt/growth/update/UpdateException;ILjava/lang/Object;)Lnet/plumt/growth/update/ForceUpdateDecision$CheckFailed;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCause ()Lnet/plumt/growth/update/UpdateException;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/growth/update/ForceUpdateDecision$Recommended : net/plumt/growth/update/ForceUpdateDecision {
+	public fun <init> (Lnet/plumt/growth/update/InstalledVersion;Ljava/lang/String;Ljava/lang/Long;)V
+	public final fun component1 ()Lnet/plumt/growth/update/InstalledVersion;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/Long;
+	public final fun copy (Lnet/plumt/growth/update/InstalledVersion;Ljava/lang/String;Ljava/lang/Long;)Lnet/plumt/growth/update/ForceUpdateDecision$Recommended;
+	public static synthetic fun copy$default (Lnet/plumt/growth/update/ForceUpdateDecision$Recommended;Lnet/plumt/growth/update/InstalledVersion;Ljava/lang/String;Ljava/lang/Long;ILjava/lang/Object;)Lnet/plumt/growth/update/ForceUpdateDecision$Recommended;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getInstalled ()Lnet/plumt/growth/update/InstalledVersion;
+	public final fun getRecommendedVersionCode ()Ljava/lang/Long;
+	public final fun getRecommendedVersionName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/growth/update/ForceUpdateDecision$Required : net/plumt/growth/update/ForceUpdateDecision {
+	public fun <init> (Lnet/plumt/growth/update/InstalledVersion;Ljava/lang/String;Ljava/lang/Long;)V
+	public final fun component1 ()Lnet/plumt/growth/update/InstalledVersion;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/Long;
+	public final fun copy (Lnet/plumt/growth/update/InstalledVersion;Ljava/lang/String;Ljava/lang/Long;)Lnet/plumt/growth/update/ForceUpdateDecision$Required;
+	public static synthetic fun copy$default (Lnet/plumt/growth/update/ForceUpdateDecision$Required;Lnet/plumt/growth/update/InstalledVersion;Ljava/lang/String;Ljava/lang/Long;ILjava/lang/Object;)Lnet/plumt/growth/update/ForceUpdateDecision$Required;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getInstalled ()Lnet/plumt/growth/update/InstalledVersion;
+	public final fun getMinimumVersionCode ()Ljava/lang/Long;
+	public final fun getMinimumVersionName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/growth/update/ForceUpdateDecision$UpToDate : net/plumt/growth/update/ForceUpdateDecision {
+	public static final field INSTANCE Lnet/plumt/growth/update/ForceUpdateDecision$UpToDate;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/growth/update/InstalledVersion {
+	public static final field Companion Lnet/plumt/growth/update/InstalledVersion$Companion;
+	public fun <init> (Ljava/lang/String;J)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()J
+	public final fun copy (Ljava/lang/String;J)Lnet/plumt/growth/update/InstalledVersion;
+	public static synthetic fun copy$default (Lnet/plumt/growth/update/InstalledVersion;Ljava/lang/String;JILjava/lang/Object;)Lnet/plumt/growth/update/InstalledVersion;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getVersionCode ()J
+	public final fun getVersionName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public static final fun of (Landroid/content/Context;)Lnet/plumt/growth/update/InstalledVersion;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/growth/update/InstalledVersion$Companion {
+	public final fun of (Landroid/content/Context;)Lnet/plumt/growth/update/InstalledVersion;
+}
+
+public abstract interface class net/plumt/growth/update/MinimumVersionSource {
+	public abstract fun fetch (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class net/plumt/growth/update/PlayInstallState {
+	public fun <init> (Lnet/plumt/growth/update/PlayInstallStatus;JJI)V
+	public synthetic fun <init> (Lnet/plumt/growth/update/PlayInstallStatus;JJIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lnet/plumt/growth/update/PlayInstallStatus;
+	public final fun component2 ()J
+	public final fun component3 ()J
+	public final fun component4 ()I
+	public final fun copy (Lnet/plumt/growth/update/PlayInstallStatus;JJI)Lnet/plumt/growth/update/PlayInstallState;
+	public static synthetic fun copy$default (Lnet/plumt/growth/update/PlayInstallState;Lnet/plumt/growth/update/PlayInstallStatus;JJIILjava/lang/Object;)Lnet/plumt/growth/update/PlayInstallState;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBytesDownloaded ()J
+	public final fun getErrorCode ()I
+	public final fun getProgress ()Ljava/lang/Float;
+	public final fun getStatus ()Lnet/plumt/growth/update/PlayInstallStatus;
+	public final fun getTotalBytesToDownload ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/growth/update/PlayInstallStatus : java/lang/Enum {
+	public static final field CANCELED Lnet/plumt/growth/update/PlayInstallStatus;
+	public static final field DOWNLOADED Lnet/plumt/growth/update/PlayInstallStatus;
+	public static final field DOWNLOADING Lnet/plumt/growth/update/PlayInstallStatus;
+	public static final field FAILED Lnet/plumt/growth/update/PlayInstallStatus;
+	public static final field INSTALLED Lnet/plumt/growth/update/PlayInstallStatus;
+	public static final field INSTALLING Lnet/plumt/growth/update/PlayInstallStatus;
+	public static final field PENDING Lnet/plumt/growth/update/PlayInstallStatus;
+	public static final field UNKNOWN Lnet/plumt/growth/update/PlayInstallStatus;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lnet/plumt/growth/update/PlayInstallStatus;
+	public static fun values ()[Lnet/plumt/growth/update/PlayInstallStatus;
+}
+
+public final class net/plumt/growth/update/PlayStoreLink {
+	public static final field INSTANCE Lnet/plumt/growth/update/PlayStoreLink;
+	public static final fun intent (Landroid/content/Context;)Landroid/content/Intent;
+	public static final fun webIntent (Landroid/content/Context;)Landroid/content/Intent;
+}
+
+public abstract interface class net/plumt/growth/update/PlayUpdateAvailability {
+}
+
+public final class net/plumt/growth/update/PlayUpdateAvailability$Available : net/plumt/growth/update/PlayUpdateAvailability {
+	public fun <init> (IILjava/lang/Integer;ZZ)V
+	public final fun allows (Lnet/plumt/growth/update/PlayUpdateType;)Z
+	public final fun component1 ()I
+	public final fun component2 ()I
+	public final fun component3 ()Ljava/lang/Integer;
+	public final fun component4 ()Z
+	public final fun component5 ()Z
+	public final fun copy (IILjava/lang/Integer;ZZ)Lnet/plumt/growth/update/PlayUpdateAvailability$Available;
+	public static synthetic fun copy$default (Lnet/plumt/growth/update/PlayUpdateAvailability$Available;IILjava/lang/Integer;ZZILjava/lang/Object;)Lnet/plumt/growth/update/PlayUpdateAvailability$Available;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAvailableVersionCode ()I
+	public final fun getFlexibleAllowed ()Z
+	public final fun getImmediateAllowed ()Z
+	public final fun getPriority ()I
+	public final fun getStalenessDays ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/growth/update/PlayUpdateAvailability$Downloaded : net/plumt/growth/update/PlayUpdateAvailability {
+	public static final field INSTANCE Lnet/plumt/growth/update/PlayUpdateAvailability$Downloaded;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/growth/update/PlayUpdateAvailability$Downloading : net/plumt/growth/update/PlayUpdateAvailability {
+	public static final field INSTANCE Lnet/plumt/growth/update/PlayUpdateAvailability$Downloading;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/growth/update/PlayUpdateAvailability$Failed : net/plumt/growth/update/PlayUpdateAvailability {
+	public fun <init> (Lnet/plumt/growth/update/UpdateException;)V
+	public final fun component1 ()Lnet/plumt/growth/update/UpdateException;
+	public final fun copy (Lnet/plumt/growth/update/UpdateException;)Lnet/plumt/growth/update/PlayUpdateAvailability$Failed;
+	public static synthetic fun copy$default (Lnet/plumt/growth/update/PlayUpdateAvailability$Failed;Lnet/plumt/growth/update/UpdateException;ILjava/lang/Object;)Lnet/plumt/growth/update/PlayUpdateAvailability$Failed;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCause ()Lnet/plumt/growth/update/UpdateException;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/growth/update/PlayUpdateAvailability$ImmediateInProgress : net/plumt/growth/update/PlayUpdateAvailability {
+	public static final field INSTANCE Lnet/plumt/growth/update/PlayUpdateAvailability$ImmediateInProgress;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/growth/update/PlayUpdateAvailability$NotAvailable : net/plumt/growth/update/PlayUpdateAvailability {
+	public static final field INSTANCE Lnet/plumt/growth/update/PlayUpdateAvailability$NotAvailable;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/growth/update/PlayUpdateAvailability$Unknown : net/plumt/growth/update/PlayUpdateAvailability {
+	public static final field INSTANCE Lnet/plumt/growth/update/PlayUpdateAvailability$Unknown;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class net/plumt/growth/update/PlayUpdateClient {
+	public static final field Companion Lnet/plumt/growth/update/PlayUpdateClient$Companion;
+	public abstract fun availability (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun completeFlexibleUpdate (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun create (Landroid/content/Context;)Lnet/plumt/growth/update/PlayUpdateClient;
+	public static fun create (Lcom/google/android/play/core/appupdate/AppUpdateManager;)Lnet/plumt/growth/update/PlayUpdateClient;
+	public abstract fun installStates ()Lkotlinx/coroutines/flow/Flow;
+	public abstract fun start (Landroid/app/Activity;Lnet/plumt/growth/update/PlayUpdateType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class net/plumt/growth/update/PlayUpdateClient$Companion {
+	public final fun create (Landroid/content/Context;)Lnet/plumt/growth/update/PlayUpdateClient;
+	public final fun create (Lcom/google/android/play/core/appupdate/AppUpdateManager;)Lnet/plumt/growth/update/PlayUpdateClient;
+}
+
+public abstract interface class net/plumt/growth/update/PlayUpdateResult {
+}
+
+public final class net/plumt/growth/update/PlayUpdateResult$Accepted : net/plumt/growth/update/PlayUpdateResult {
+	public static final field INSTANCE Lnet/plumt/growth/update/PlayUpdateResult$Accepted;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/growth/update/PlayUpdateResult$Canceled : net/plumt/growth/update/PlayUpdateResult {
+	public static final field INSTANCE Lnet/plumt/growth/update/PlayUpdateResult$Canceled;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/growth/update/PlayUpdateResult$Failed : net/plumt/growth/update/PlayUpdateResult {
+	public fun <init> (Lnet/plumt/growth/update/UpdateException;)V
+	public final fun component1 ()Lnet/plumt/growth/update/UpdateException;
+	public final fun copy (Lnet/plumt/growth/update/UpdateException;)Lnet/plumt/growth/update/PlayUpdateResult$Failed;
+	public static synthetic fun copy$default (Lnet/plumt/growth/update/PlayUpdateResult$Failed;Lnet/plumt/growth/update/UpdateException;ILjava/lang/Object;)Lnet/plumt/growth/update/PlayUpdateResult$Failed;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCause ()Lnet/plumt/growth/update/UpdateException;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class net/plumt/growth/update/PlayUpdateStrategy {
+	public abstract fun choose (Lnet/plumt/growth/update/PlayUpdateAvailability$Available;)Lnet/plumt/growth/update/PlayUpdateType;
+}
+
+public final class net/plumt/growth/update/PlayUpdateType : java/lang/Enum {
+	public static final field FLEXIBLE Lnet/plumt/growth/update/PlayUpdateType;
+	public static final field IMMEDIATE Lnet/plumt/growth/update/PlayUpdateType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lnet/plumt/growth/update/PlayUpdateType;
+	public static fun values ()[Lnet/plumt/growth/update/PlayUpdateType;
+}
+
+public final class net/plumt/growth/update/SemanticVersion : java/lang/Comparable {
+	public static final field Companion Lnet/plumt/growth/update/SemanticVersion$Companion;
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public fun compareTo (Lnet/plumt/growth/update/SemanticVersion;)I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getNumericParts ()Ljava/util/List;
+	public fun hashCode ()I
+	public final fun isPreRelease ()Z
+	public static final fun parse (Ljava/lang/String;)Lnet/plumt/growth/update/SemanticVersion;
+	public static final fun parseOrNull (Ljava/lang/String;)Lnet/plumt/growth/update/SemanticVersion;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/growth/update/SemanticVersion$Companion {
+	public final fun parse (Ljava/lang/String;)Lnet/plumt/growth/update/SemanticVersion;
+	public final fun parseOrNull (Ljava/lang/String;)Lnet/plumt/growth/update/SemanticVersion;
+}
+
+public abstract interface class net/plumt/growth/update/UpdateAction {
+}
+
+public final class net/plumt/growth/update/UpdateAction$BlockUntilStoreUpdate : net/plumt/growth/update/UpdateAction {
+	public fun <init> (Lnet/plumt/growth/update/ForceUpdateDecision$Required;)V
+	public final fun component1 ()Lnet/plumt/growth/update/ForceUpdateDecision$Required;
+	public final fun copy (Lnet/plumt/growth/update/ForceUpdateDecision$Required;)Lnet/plumt/growth/update/UpdateAction$BlockUntilStoreUpdate;
+	public static synthetic fun copy$default (Lnet/plumt/growth/update/UpdateAction$BlockUntilStoreUpdate;Lnet/plumt/growth/update/ForceUpdateDecision$Required;ILjava/lang/Object;)Lnet/plumt/growth/update/UpdateAction$BlockUntilStoreUpdate;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getRequired ()Lnet/plumt/growth/update/ForceUpdateDecision$Required;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/growth/update/UpdateAction$InstallDownloaded : net/plumt/growth/update/UpdateAction {
+	public static final field INSTANCE Lnet/plumt/growth/update/UpdateAction$InstallDownloaded;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/growth/update/UpdateAction$None : net/plumt/growth/update/UpdateAction {
+	public static final field INSTANCE Lnet/plumt/growth/update/UpdateAction$None;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/growth/update/UpdateAction$ResumePlayImmediate : net/plumt/growth/update/UpdateAction {
+	public static final field INSTANCE Lnet/plumt/growth/update/UpdateAction$ResumePlayImmediate;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/growth/update/UpdateAction$StartPlay : net/plumt/growth/update/UpdateAction {
+	public fun <init> (Lnet/plumt/growth/update/PlayUpdateType;)V
+	public final fun component1 ()Lnet/plumt/growth/update/PlayUpdateType;
+	public final fun copy (Lnet/plumt/growth/update/PlayUpdateType;)Lnet/plumt/growth/update/UpdateAction$StartPlay;
+	public static synthetic fun copy$default (Lnet/plumt/growth/update/UpdateAction$StartPlay;Lnet/plumt/growth/update/PlayUpdateType;ILjava/lang/Object;)Lnet/plumt/growth/update/UpdateAction$StartPlay;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getType ()Lnet/plumt/growth/update/PlayUpdateType;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/growth/update/UpdateActionResolver {
+	public static final field INSTANCE Lnet/plumt/growth/update/UpdateActionResolver;
+	public final fun resolve (Lnet/plumt/growth/update/ForceUpdateDecision;Lnet/plumt/growth/update/PlayUpdateAvailability;Lnet/plumt/growth/update/PlayUpdateStrategy;)Lnet/plumt/growth/update/UpdateAction;
+	public static synthetic fun resolve$default (Lnet/plumt/growth/update/UpdateActionResolver;Lnet/plumt/growth/update/ForceUpdateDecision;Lnet/plumt/growth/update/PlayUpdateAvailability;Lnet/plumt/growth/update/PlayUpdateStrategy;ILjava/lang/Object;)Lnet/plumt/growth/update/UpdateAction;
+}
+
+public final class net/plumt/growth/update/UpdateCheckResult {
+	public fun <init> (Lnet/plumt/growth/update/ForceUpdateDecision;Lnet/plumt/growth/update/PlayUpdateAvailability;Lnet/plumt/growth/update/UpdateAction;)V
+	public final fun component1 ()Lnet/plumt/growth/update/ForceUpdateDecision;
+	public final fun component2 ()Lnet/plumt/growth/update/PlayUpdateAvailability;
+	public final fun component3 ()Lnet/plumt/growth/update/UpdateAction;
+	public final fun copy (Lnet/plumt/growth/update/ForceUpdateDecision;Lnet/plumt/growth/update/PlayUpdateAvailability;Lnet/plumt/growth/update/UpdateAction;)Lnet/plumt/growth/update/UpdateCheckResult;
+	public static synthetic fun copy$default (Lnet/plumt/growth/update/UpdateCheckResult;Lnet/plumt/growth/update/ForceUpdateDecision;Lnet/plumt/growth/update/PlayUpdateAvailability;Lnet/plumt/growth/update/UpdateAction;ILjava/lang/Object;)Lnet/plumt/growth/update/UpdateCheckResult;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAction ()Lnet/plumt/growth/update/UpdateAction;
+	public final fun getForce ()Lnet/plumt/growth/update/ForceUpdateDecision;
+	public final fun getPlay ()Lnet/plumt/growth/update/PlayUpdateAvailability;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/growth/update/UpdateException : java/lang/Exception {
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/Throwable;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/Throwable;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+}
+
+public final class net/plumt/growth/update/VersionRequirement {
+	public static final field Companion Lnet/plumt/growth/update/VersionRequirement$Companion;
+	public static final field NONE Lnet/plumt/growth/update/VersionRequirement;
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/Long;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/Long;Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/Long;Ljava/lang/String;Ljava/lang/Long;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/Long;Ljava/lang/String;Ljava/lang/Long;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/Long;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/Long;
+	public final fun copy (Ljava/lang/String;Ljava/lang/Long;Ljava/lang/String;Ljava/lang/Long;)Lnet/plumt/growth/update/VersionRequirement;
+	public static synthetic fun copy$default (Lnet/plumt/growth/update/VersionRequirement;Ljava/lang/String;Ljava/lang/Long;Ljava/lang/String;Ljava/lang/Long;ILjava/lang/Object;)Lnet/plumt/growth/update/VersionRequirement;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun evaluate (Lnet/plumt/growth/update/InstalledVersion;)Lnet/plumt/growth/update/ForceUpdateDecision;
+	public final fun getMinimumVersionCode ()Ljava/lang/Long;
+	public final fun getMinimumVersionName ()Ljava/lang/String;
+	public final fun getRecommendedVersionCode ()Ljava/lang/Long;
+	public final fun getRecommendedVersionName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/growth/update/VersionRequirement$Companion {
+}
+

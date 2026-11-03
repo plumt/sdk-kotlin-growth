@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="growth_update_optional_title">새 버전이 있어요</string>
+    <string name="growth_update_optional_message">새 버전이 나왔어요. 지금 업데이트하면 개선된 기능을 쓸 수 있어요.</string>
+    <string name="growth_update_ready_title">업데이트를 내려받았어요</string>
+    <string name="growth_update_ready_message">앱을 다시 시작하면 업데이트가 마무리돼요.</string>
+    <string name="growth_update_required_title">업데이트가 필요해요</string>
+    <string name="growth_update_required_message">이 버전은 더 이상 지원하지 않아요. 계속 쓰려면 업데이트해 주세요.</string>
+    <string name="growth_update_confirm">업데이트</string>
+    <string name="growth_update_install">다시 시작</string>
+    <string name="growth_update_later">나중에</string>
+</resources>

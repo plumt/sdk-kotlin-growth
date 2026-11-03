@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="growth_update_optional_title">Update available</string>
+    <string name="growth_update_optional_message">A new version is available. Update now to get the latest improvements.</string>
+    <string name="growth_update_ready_title">Update downloaded</string>
+    <string name="growth_update_ready_message">The update is ready. Restart the app to finish installing it.</string>
+    <string name="growth_update_required_title">Update required</string>
+    <string name="growth_update_required_message">This version is no longer supported. Please update to keep using the app.</string>
+    <string name="growth_update_confirm">Update</string>
+    <string name="growth_update_install">Restart</string>
+    <string name="growth_update_later">Later</string>
+</resources>
