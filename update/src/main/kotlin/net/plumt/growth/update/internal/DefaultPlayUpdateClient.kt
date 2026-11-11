@@ -1,6 +1,8 @@
 package net.plumt.growth.update.internal
 
 import android.app.Activity
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.IntentSenderRequest
 import com.google.android.gms.tasks.Task
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManager
@@ -36,18 +38,31 @@ internal class DefaultPlayUpdateClient(
         PlayUpdateAvailability.Failed(e as? UpdateException ?: UpdateException("Play 업데이트 정보를 가져오지 못했습니다.", e))
     }
 
-    override suspend fun start(activity: Activity, type: PlayUpdateType): PlayUpdateResult = try {
+    override suspend fun start(activity: Activity, type: PlayUpdateType): PlayUpdateResult = launchFlow(type) { info, options ->
+        PlayUpdateResult.fromActivityResult(manager.startUpdateFlow(info, activity, options).await())
+    }
+
+    override suspend fun start(
+        launcher: ActivityResultLauncher<IntentSenderRequest>,
+        type: PlayUpdateType,
+    ): PlayUpdateResult = launchFlow(type) { info, options ->
+        if (manager.startUpdateFlowForResult(info, launcher, options)) PlayUpdateResult.Launched
+        else PlayUpdateResult.Failed(UpdateException("Play 가 업데이트 흐름을 띄우지 않았습니다: $type"))
+    }
+
+    private suspend fun launchFlow(
+        type: PlayUpdateType,
+        launch: suspend (AppUpdateInfo, AppUpdateOptions) -> PlayUpdateResult,
+    ): PlayUpdateResult = try {
         val info = manager.appUpdateInfo.await()
         val playType = type.toPlay()
-        if (!info.isUpdateTypeAllowed(playType)) {
+        // 진행 중이던 즉시 업데이트를 이어 갈 때는 허용 여부를 보지 않는다(Play 예시와 같다)
+        val resuming = playType == AppUpdateType.IMMEDIATE &&
+            info.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
+        if (!resuming && !info.isUpdateTypeAllowed(playType)) {
             throw UpdateException("이 기기에서 허용되지 않는 업데이트 방식입니다: $type")
         }
-        val code = manager.startUpdateFlow(info, activity, AppUpdateOptions.newBuilder(playType).build()).await()
-        when (code) {
-            Activity.RESULT_OK -> PlayUpdateResult.Accepted
-            Activity.RESULT_CANCELED -> PlayUpdateResult.Canceled
-            else -> PlayUpdateResult.Failed(UpdateException("Play 업데이트 흐름이 실패했습니다. 결과 코드: $code"))
-        }
+        launch(info, AppUpdateOptions.newBuilder(playType).build())
     } catch (e: CancellationException) {
         throw e
     } catch (e: Exception) {
@@ -70,7 +85,8 @@ internal class DefaultPlayUpdateClient(
     }
 
     private fun map(info: AppUpdateInfo): PlayUpdateAvailability {
-        // 설치 상태를 먼저 본다 — 내려받은 뒤에는 updateAvailability 가 UPDATE_AVAILABLE 로 남아 있을 수 있다
+        // 설치 상태를 먼저 본다 — 내려받은 뒤에는 updateAvailability 가 UPDATE_AVAILABLE 로 남아 있을 수 있다.
+        // REQUIRES_UI_INTENT 는 흐름을 다시 띄워야 한다는 뜻이라 가용성(UPDATE_AVAILABLE → Available)으로 넘겨 재시작하게 한다
         when (info.installStatus()) {
             InstallStatus.DOWNLOADED -> return PlayUpdateAvailability.Downloaded
             InstallStatus.PENDING, InstallStatus.DOWNLOADING, InstallStatus.INSTALLING -> return PlayUpdateAvailability.Downloading
@@ -94,6 +110,7 @@ internal class DefaultPlayUpdateClient(
 
     private fun InstallState.toModel(): PlayInstallState = PlayInstallState(
         status = when (installStatus()) {
+            InstallStatus.REQUIRES_UI_INTENT -> PlayInstallStatus.REQUIRES_UI_INTENT
             InstallStatus.PENDING -> PlayInstallStatus.PENDING
             InstallStatus.DOWNLOADING -> PlayInstallStatus.DOWNLOADING
             InstallStatus.DOWNLOADED -> PlayInstallStatus.DOWNLOADED

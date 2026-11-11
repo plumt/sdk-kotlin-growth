@@ -29,5 +29,5 @@ public sealed interface ReviewLaunchResult {
     public data object FlowFinished : ReviewLaunchResult
 
     /** Play 서비스가 없거나 요청이 거부되는 등 플로우를 끝내지 못했다. 원인은 [cause] 다. */
-    public data class Failed(val cause: ReviewException) : ReviewLaunchResult
+    public data class Failed(val cause: ReviewPromptException) : ReviewLaunchResult
 }

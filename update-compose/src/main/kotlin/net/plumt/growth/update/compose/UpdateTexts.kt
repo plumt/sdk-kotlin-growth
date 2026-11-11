@@ -13,9 +13,12 @@ public data class UpdateTexts(
     val readyMessage: String,
     val requiredTitle: String,
     val requiredMessage: String,
+    val checkFailedTitle: String,
+    val checkFailedMessage: String,
     val confirm: String,
     val install: String,
     val later: String,
+    val retry: String,
 ) {
     public companion object {
         /** 라이브러리 기본 문구(현재 로캘). */
@@ -27,9 +30,12 @@ public data class UpdateTexts(
             readyMessage = stringResource(R.string.growth_update_ready_message),
             requiredTitle = stringResource(R.string.growth_update_required_title),
             requiredMessage = stringResource(R.string.growth_update_required_message),
+            checkFailedTitle = stringResource(R.string.growth_update_check_failed_title),
+            checkFailedMessage = stringResource(R.string.growth_update_check_failed_message),
             confirm = stringResource(R.string.growth_update_confirm),
             install = stringResource(R.string.growth_update_install),
             later = stringResource(R.string.growth_update_later),
+            retry = stringResource(R.string.growth_update_retry),
         )
     }
 }

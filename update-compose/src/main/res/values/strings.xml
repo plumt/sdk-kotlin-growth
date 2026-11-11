@@ -9,4 +9,7 @@
     <string name="growth_update_confirm">Update</string>
     <string name="growth_update_install">Restart</string>
     <string name="growth_update_later">Later</string>
+    <string name="growth_update_check_failed_title">Couldn\'t check for updates</string>
+    <string name="growth_update_check_failed_message">Check your connection and try again.</string>
+    <string name="growth_update_retry">Try again</string>
 </resources>

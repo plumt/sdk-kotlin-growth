@@ -10,7 +10,7 @@ class UpdateActionResolverTest {
     private val required = ForceUpdateDecision.Required(installed, "2.0.0", null)
     private val recommended = ForceUpdateDecision.Recommended(installed, "1.5.0", null)
     private val upToDate = ForceUpdateDecision.UpToDate
-    private val failed = ForceUpdateDecision.CheckFailed(UpdateException("실패"))
+    private val failed = ForceUpdateDecision.CheckFailed(UpdateException("실패"), CheckFailureReason.SOURCE_UNAVAILABLE)
 
     private fun available(
         priority: Int = 0,

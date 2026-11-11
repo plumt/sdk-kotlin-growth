@@ -1,22 +1,52 @@
 public abstract interface class net/plumt/growth/update/AppUpdater {
 	public static final field Companion Lnet/plumt/growth/update/AppUpdater$Companion;
+	public static final field DEFAULT_PLAY_TIMEOUT_MILLIS J
 	public abstract fun check (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun create (Landroid/content/Context;)Lnet/plumt/growth/update/AppUpdater;
 	public static fun create (Landroid/content/Context;Lnet/plumt/growth/update/MinimumVersionSource;)Lnet/plumt/growth/update/AppUpdater;
 	public static fun create (Landroid/content/Context;Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/PlayUpdateClient;)Lnet/plumt/growth/update/AppUpdater;
 	public static fun create (Landroid/content/Context;Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/PlayUpdateClient;Lnet/plumt/growth/update/PlayUpdateStrategy;)Lnet/plumt/growth/update/AppUpdater;
 	public static fun create (Landroid/content/Context;Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/PlayUpdateClient;Lnet/plumt/growth/update/PlayUpdateStrategy;Lnet/plumt/growth/update/InstalledVersion;)Lnet/plumt/growth/update/AppUpdater;
+	public static fun create (Landroid/content/Context;Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/PlayUpdateClient;Lnet/plumt/growth/update/PlayUpdateStrategy;Lnet/plumt/growth/update/InstalledVersion;Lnet/plumt/growth/update/VersionNameParser;)Lnet/plumt/growth/update/AppUpdater;
+	public static fun create (Landroid/content/Context;Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/PlayUpdateClient;Lnet/plumt/growth/update/PlayUpdateStrategy;Lnet/plumt/growth/update/InstalledVersion;Lnet/plumt/growth/update/VersionNameParser;Lnet/plumt/growth/update/CheckFailurePolicy;)Lnet/plumt/growth/update/AppUpdater;
+	public static fun create (Landroid/content/Context;Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/PlayUpdateClient;Lnet/plumt/growth/update/PlayUpdateStrategy;Lnet/plumt/growth/update/InstalledVersion;Lnet/plumt/growth/update/VersionNameParser;Lnet/plumt/growth/update/CheckFailurePolicy;J)Lnet/plumt/growth/update/AppUpdater;
 	public abstract fun installStates ()Lkotlinx/coroutines/flow/Flow;
+	public abstract fun refresh (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun start (Landroid/app/Activity;Lnet/plumt/growth/update/UpdateAction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun start (Landroidx/activity/result/ActivityResultLauncher;Lnet/plumt/growth/update/UpdateAction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class net/plumt/growth/update/AppUpdater$Companion {
+	public static final field DEFAULT_PLAY_TIMEOUT_MILLIS J
 	public final fun create (Landroid/content/Context;)Lnet/plumt/growth/update/AppUpdater;
 	public final fun create (Landroid/content/Context;Lnet/plumt/growth/update/MinimumVersionSource;)Lnet/plumt/growth/update/AppUpdater;
 	public final fun create (Landroid/content/Context;Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/PlayUpdateClient;)Lnet/plumt/growth/update/AppUpdater;
 	public final fun create (Landroid/content/Context;Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/PlayUpdateClient;Lnet/plumt/growth/update/PlayUpdateStrategy;)Lnet/plumt/growth/update/AppUpdater;
 	public final fun create (Landroid/content/Context;Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/PlayUpdateClient;Lnet/plumt/growth/update/PlayUpdateStrategy;Lnet/plumt/growth/update/InstalledVersion;)Lnet/plumt/growth/update/AppUpdater;
-	public static synthetic fun create$default (Lnet/plumt/growth/update/AppUpdater$Companion;Landroid/content/Context;Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/PlayUpdateClient;Lnet/plumt/growth/update/PlayUpdateStrategy;Lnet/plumt/growth/update/InstalledVersion;ILjava/lang/Object;)Lnet/plumt/growth/update/AppUpdater;
+	public final fun create (Landroid/content/Context;Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/PlayUpdateClient;Lnet/plumt/growth/update/PlayUpdateStrategy;Lnet/plumt/growth/update/InstalledVersion;Lnet/plumt/growth/update/VersionNameParser;)Lnet/plumt/growth/update/AppUpdater;
+	public final fun create (Landroid/content/Context;Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/PlayUpdateClient;Lnet/plumt/growth/update/PlayUpdateStrategy;Lnet/plumt/growth/update/InstalledVersion;Lnet/plumt/growth/update/VersionNameParser;Lnet/plumt/growth/update/CheckFailurePolicy;)Lnet/plumt/growth/update/AppUpdater;
+	public final fun create (Landroid/content/Context;Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/PlayUpdateClient;Lnet/plumt/growth/update/PlayUpdateStrategy;Lnet/plumt/growth/update/InstalledVersion;Lnet/plumt/growth/update/VersionNameParser;Lnet/plumt/growth/update/CheckFailurePolicy;J)Lnet/plumt/growth/update/AppUpdater;
+	public static synthetic fun create$default (Lnet/plumt/growth/update/AppUpdater$Companion;Landroid/content/Context;Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/PlayUpdateClient;Lnet/plumt/growth/update/PlayUpdateStrategy;Lnet/plumt/growth/update/InstalledVersion;Lnet/plumt/growth/update/VersionNameParser;Lnet/plumt/growth/update/CheckFailurePolicy;JILjava/lang/Object;)Lnet/plumt/growth/update/AppUpdater;
+}
+
+public abstract interface class net/plumt/growth/update/CheckFailurePolicy {
+	public static final field Companion Lnet/plumt/growth/update/CheckFailurePolicy$Companion;
+	public static final field FAIL_CLOSED Lnet/plumt/growth/update/CheckFailurePolicy;
+	public static final field FAIL_CLOSED_ON_INVALID_VALUE Lnet/plumt/growth/update/CheckFailurePolicy;
+	public static final field FAIL_OPEN Lnet/plumt/growth/update/CheckFailurePolicy;
+	public abstract fun shouldBlock (Lnet/plumt/growth/update/ForceUpdateDecision$CheckFailed;)Z
+}
+
+public final class net/plumt/growth/update/CheckFailurePolicy$Companion {
+}
+
+public final class net/plumt/growth/update/CheckFailureReason : java/lang/Enum {
+	public static final field INVALID_INSTALLED_VERSION Lnet/plumt/growth/update/CheckFailureReason;
+	public static final field INVALID_REQUIREMENT Lnet/plumt/growth/update/CheckFailureReason;
+	public static final field SOURCE_UNAVAILABLE Lnet/plumt/growth/update/CheckFailureReason;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lnet/plumt/growth/update/CheckFailureReason;
+	public static fun values ()[Lnet/plumt/growth/update/CheckFailureReason;
 }
 
 public final class net/plumt/growth/update/DefaultPlayUpdateStrategy : net/plumt/growth/update/PlayUpdateStrategy {
@@ -52,22 +82,27 @@ public abstract interface class net/plumt/growth/update/ForceUpdateChecker {
 	public static final field Companion Lnet/plumt/growth/update/ForceUpdateChecker$Companion;
 	public abstract fun check (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun create (Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/InstalledVersion;)Lnet/plumt/growth/update/ForceUpdateChecker;
+	public static fun create (Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/InstalledVersion;Lnet/plumt/growth/update/VersionNameParser;)Lnet/plumt/growth/update/ForceUpdateChecker;
 }
 
 public final class net/plumt/growth/update/ForceUpdateChecker$Companion {
 	public final fun create (Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/InstalledVersion;)Lnet/plumt/growth/update/ForceUpdateChecker;
+	public final fun create (Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/InstalledVersion;Lnet/plumt/growth/update/VersionNameParser;)Lnet/plumt/growth/update/ForceUpdateChecker;
+	public static synthetic fun create$default (Lnet/plumt/growth/update/ForceUpdateChecker$Companion;Lnet/plumt/growth/update/MinimumVersionSource;Lnet/plumt/growth/update/InstalledVersion;Lnet/plumt/growth/update/VersionNameParser;ILjava/lang/Object;)Lnet/plumt/growth/update/ForceUpdateChecker;
 }
 
 public abstract interface class net/plumt/growth/update/ForceUpdateDecision {
 }
 
 public final class net/plumt/growth/update/ForceUpdateDecision$CheckFailed : net/plumt/growth/update/ForceUpdateDecision {
-	public fun <init> (Lnet/plumt/growth/update/UpdateException;)V
+	public fun <init> (Lnet/plumt/growth/update/UpdateException;Lnet/plumt/growth/update/CheckFailureReason;)V
 	public final fun component1 ()Lnet/plumt/growth/update/UpdateException;
-	public final fun copy (Lnet/plumt/growth/update/UpdateException;)Lnet/plumt/growth/update/ForceUpdateDecision$CheckFailed;
-	public static synthetic fun copy$default (Lnet/plumt/growth/update/ForceUpdateDecision$CheckFailed;Lnet/plumt/growth/update/UpdateException;ILjava/lang/Object;)Lnet/plumt/growth/update/ForceUpdateDecision$CheckFailed;
+	public final fun component2 ()Lnet/plumt/growth/update/CheckFailureReason;
+	public final fun copy (Lnet/plumt/growth/update/UpdateException;Lnet/plumt/growth/update/CheckFailureReason;)Lnet/plumt/growth/update/ForceUpdateDecision$CheckFailed;
+	public static synthetic fun copy$default (Lnet/plumt/growth/update/ForceUpdateDecision$CheckFailed;Lnet/plumt/growth/update/UpdateException;Lnet/plumt/growth/update/CheckFailureReason;ILjava/lang/Object;)Lnet/plumt/growth/update/ForceUpdateDecision$CheckFailed;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCause ()Lnet/plumt/growth/update/UpdateException;
+	public final fun getReason ()Lnet/plumt/growth/update/CheckFailureReason;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -159,6 +194,7 @@ public final class net/plumt/growth/update/PlayInstallStatus : java/lang/Enum {
 	public static final field INSTALLED Lnet/plumt/growth/update/PlayInstallStatus;
 	public static final field INSTALLING Lnet/plumt/growth/update/PlayInstallStatus;
 	public static final field PENDING Lnet/plumt/growth/update/PlayInstallStatus;
+	public static final field REQUIRES_UI_INTENT Lnet/plumt/growth/update/PlayInstallStatus;
 	public static final field UNKNOWN Lnet/plumt/growth/update/PlayInstallStatus;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lnet/plumt/growth/update/PlayInstallStatus;
@@ -167,7 +203,9 @@ public final class net/plumt/growth/update/PlayInstallStatus : java/lang/Enum {
 
 public final class net/plumt/growth/update/PlayStoreLink {
 	public static final field INSTANCE Lnet/plumt/growth/update/PlayStoreLink;
+	public static final field PLAY_STORE_PACKAGE Ljava/lang/String;
 	public static final fun intent (Landroid/content/Context;)Landroid/content/Intent;
+	public static final fun open (Landroid/content/Context;)V
 	public static final fun webIntent (Landroid/content/Context;)Landroid/content/Intent;
 }
 
@@ -248,6 +286,7 @@ public abstract interface class net/plumt/growth/update/PlayUpdateClient {
 	public static fun create (Lcom/google/android/play/core/appupdate/AppUpdateManager;)Lnet/plumt/growth/update/PlayUpdateClient;
 	public abstract fun installStates ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun start (Landroid/app/Activity;Lnet/plumt/growth/update/PlayUpdateType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun start (Landroidx/activity/result/ActivityResultLauncher;Lnet/plumt/growth/update/PlayUpdateType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class net/plumt/growth/update/PlayUpdateClient$Companion {
@@ -255,7 +294,13 @@ public final class net/plumt/growth/update/PlayUpdateClient$Companion {
 	public final fun create (Lcom/google/android/play/core/appupdate/AppUpdateManager;)Lnet/plumt/growth/update/PlayUpdateClient;
 }
 
+public final class net/plumt/growth/update/PlayUpdateClient$DefaultImpls {
+	public static fun start (Lnet/plumt/growth/update/PlayUpdateClient;Landroidx/activity/result/ActivityResultLauncher;Lnet/plumt/growth/update/PlayUpdateType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public abstract interface class net/plumt/growth/update/PlayUpdateResult {
+	public static final field Companion Lnet/plumt/growth/update/PlayUpdateResult$Companion;
+	public static fun fromActivityResult (I)Lnet/plumt/growth/update/PlayUpdateResult;
 }
 
 public final class net/plumt/growth/update/PlayUpdateResult$Accepted : net/plumt/growth/update/PlayUpdateResult {
@@ -272,6 +317,10 @@ public final class net/plumt/growth/update/PlayUpdateResult$Canceled : net/plumt
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class net/plumt/growth/update/PlayUpdateResult$Companion {
+	public final fun fromActivityResult (I)Lnet/plumt/growth/update/PlayUpdateResult;
+}
+
 public final class net/plumt/growth/update/PlayUpdateResult$Failed : net/plumt/growth/update/PlayUpdateResult {
 	public fun <init> (Lnet/plumt/growth/update/UpdateException;)V
 	public final fun component1 ()Lnet/plumt/growth/update/UpdateException;
@@ -279,6 +328,13 @@ public final class net/plumt/growth/update/PlayUpdateResult$Failed : net/plumt/g
 	public static synthetic fun copy$default (Lnet/plumt/growth/update/PlayUpdateResult$Failed;Lnet/plumt/growth/update/UpdateException;ILjava/lang/Object;)Lnet/plumt/growth/update/PlayUpdateResult$Failed;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCause ()Lnet/plumt/growth/update/UpdateException;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/growth/update/PlayUpdateResult$Launched : net/plumt/growth/update/PlayUpdateResult {
+	public static final field INSTANCE Lnet/plumt/growth/update/PlayUpdateResult$Launched;
+	public fun equals (Ljava/lang/Object;)Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -315,6 +371,17 @@ public final class net/plumt/growth/update/SemanticVersion$Companion {
 }
 
 public abstract interface class net/plumt/growth/update/UpdateAction {
+}
+
+public final class net/plumt/growth/update/UpdateAction$BlockUntilCheckSucceeds : net/plumt/growth/update/UpdateAction {
+	public fun <init> (Lnet/plumt/growth/update/ForceUpdateDecision$CheckFailed;)V
+	public final fun component1 ()Lnet/plumt/growth/update/ForceUpdateDecision$CheckFailed;
+	public final fun copy (Lnet/plumt/growth/update/ForceUpdateDecision$CheckFailed;)Lnet/plumt/growth/update/UpdateAction$BlockUntilCheckSucceeds;
+	public static synthetic fun copy$default (Lnet/plumt/growth/update/UpdateAction$BlockUntilCheckSucceeds;Lnet/plumt/growth/update/ForceUpdateDecision$CheckFailed;ILjava/lang/Object;)Lnet/plumt/growth/update/UpdateAction$BlockUntilCheckSucceeds;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getFailure ()Lnet/plumt/growth/update/ForceUpdateDecision$CheckFailed;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class net/plumt/growth/update/UpdateAction$BlockUntilStoreUpdate : net/plumt/growth/update/UpdateAction {
@@ -362,8 +429,10 @@ public final class net/plumt/growth/update/UpdateAction$StartPlay : net/plumt/gr
 
 public final class net/plumt/growth/update/UpdateActionResolver {
 	public static final field INSTANCE Lnet/plumt/growth/update/UpdateActionResolver;
-	public final fun resolve (Lnet/plumt/growth/update/ForceUpdateDecision;Lnet/plumt/growth/update/PlayUpdateAvailability;Lnet/plumt/growth/update/PlayUpdateStrategy;)Lnet/plumt/growth/update/UpdateAction;
-	public static synthetic fun resolve$default (Lnet/plumt/growth/update/UpdateActionResolver;Lnet/plumt/growth/update/ForceUpdateDecision;Lnet/plumt/growth/update/PlayUpdateAvailability;Lnet/plumt/growth/update/PlayUpdateStrategy;ILjava/lang/Object;)Lnet/plumt/growth/update/UpdateAction;
+	public static final fun resolve (Lnet/plumt/growth/update/ForceUpdateDecision;Lnet/plumt/growth/update/PlayUpdateAvailability;)Lnet/plumt/growth/update/UpdateAction;
+	public static final fun resolve (Lnet/plumt/growth/update/ForceUpdateDecision;Lnet/plumt/growth/update/PlayUpdateAvailability;Lnet/plumt/growth/update/PlayUpdateStrategy;)Lnet/plumt/growth/update/UpdateAction;
+	public static final fun resolve (Lnet/plumt/growth/update/ForceUpdateDecision;Lnet/plumt/growth/update/PlayUpdateAvailability;Lnet/plumt/growth/update/PlayUpdateStrategy;Lnet/plumt/growth/update/CheckFailurePolicy;)Lnet/plumt/growth/update/UpdateAction;
+	public static synthetic fun resolve$default (Lnet/plumt/growth/update/ForceUpdateDecision;Lnet/plumt/growth/update/PlayUpdateAvailability;Lnet/plumt/growth/update/PlayUpdateStrategy;Lnet/plumt/growth/update/CheckFailurePolicy;ILjava/lang/Object;)Lnet/plumt/growth/update/UpdateAction;
 }
 
 public final class net/plumt/growth/update/UpdateCheckResult {
@@ -378,6 +447,8 @@ public final class net/plumt/growth/update/UpdateCheckResult {
 	public final fun getForce ()Lnet/plumt/growth/update/ForceUpdateDecision;
 	public final fun getPlay ()Lnet/plumt/growth/update/PlayUpdateAvailability;
 	public fun hashCode ()I
+	public final fun isBlocking ()Z
+	public final fun isUpdateRequired ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -385,6 +456,16 @@ public final class net/plumt/growth/update/UpdateException : java/lang/Exception
 	public fun <init> (Ljava/lang/String;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/Throwable;)V
 	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/Throwable;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+}
+
+public abstract interface class net/plumt/growth/update/VersionNameParser {
+	public static final field Companion Lnet/plumt/growth/update/VersionNameParser$Companion;
+	public static final field NUMERIC_PREFIX Lnet/plumt/growth/update/VersionNameParser;
+	public static final field STRICT Lnet/plumt/growth/update/VersionNameParser;
+	public abstract fun parse (Ljava/lang/String;)Lnet/plumt/growth/update/SemanticVersion;
+}
+
+public final class net/plumt/growth/update/VersionNameParser$Companion {
 }
 
 public final class net/plumt/growth/update/VersionRequirement {
@@ -396,19 +477,16 @@ public final class net/plumt/growth/update/VersionRequirement {
 	public fun <init> (Ljava/lang/String;Ljava/lang/Long;Ljava/lang/String;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/Long;Ljava/lang/String;Ljava/lang/Long;)V
 	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/Long;Ljava/lang/String;Ljava/lang/Long;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Ljava/lang/Long;
-	public final fun component3 ()Ljava/lang/String;
-	public final fun component4 ()Ljava/lang/Long;
-	public final fun copy (Ljava/lang/String;Ljava/lang/Long;Ljava/lang/String;Ljava/lang/Long;)Lnet/plumt/growth/update/VersionRequirement;
-	public static synthetic fun copy$default (Lnet/plumt/growth/update/VersionRequirement;Ljava/lang/String;Ljava/lang/Long;Ljava/lang/String;Ljava/lang/Long;ILjava/lang/Object;)Lnet/plumt/growth/update/VersionRequirement;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun evaluate (Lnet/plumt/growth/update/InstalledVersion;)Lnet/plumt/growth/update/ForceUpdateDecision;
+	public final fun evaluate (Lnet/plumt/growth/update/InstalledVersion;Lnet/plumt/growth/update/VersionNameParser;)Lnet/plumt/growth/update/ForceUpdateDecision;
+	public static synthetic fun evaluate$default (Lnet/plumt/growth/update/VersionRequirement;Lnet/plumt/growth/update/InstalledVersion;Lnet/plumt/growth/update/VersionNameParser;ILjava/lang/Object;)Lnet/plumt/growth/update/ForceUpdateDecision;
 	public final fun getMinimumVersionCode ()Ljava/lang/Long;
 	public final fun getMinimumVersionName ()Ljava/lang/String;
 	public final fun getRecommendedVersionCode ()Ljava/lang/Long;
 	public final fun getRecommendedVersionName ()Ljava/lang/String;
 	public fun hashCode ()I
+	public final fun isEmpty ()Z
 	public fun toString ()Ljava/lang/String;
 }
 

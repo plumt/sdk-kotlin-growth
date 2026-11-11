@@ -20,6 +20,12 @@ public sealed interface UpdateAction {
      * ([PlayStoreLink.intent]). 업데이트가 이 기기에 아직 배포되지 않았을 수도 있다.
      */
     public data class BlockUntilStoreUpdate(val required: ForceUpdateDecision.Required) : UpdateAction
+
+    /**
+     * 원격 판정이 실패했고 [CheckFailurePolicy] 가 막기로 했다 — 다시 확인([AppUpdater.check])할 때까지 앱을 막는다.
+     * 기본 정책([CheckFailurePolicy.FAIL_OPEN])에서는 나오지 않는다.
+     */
+    public data class BlockUntilCheckSucceeds(val failure: ForceUpdateDecision.CheckFailed) : UpdateAction
 }
 
 /**
@@ -29,6 +35,7 @@ public sealed interface UpdateAction {
  *
  * | 순서 | 조건 | 동작 |
  * |---|---|---|
+ * | 0 | 원격 판정 실패 + [CheckFailurePolicy] 가 막음 | [UpdateAction.BlockUntilCheckSucceeds] |
  * | 1 | Play 즉시 업데이트 진행 중 | [UpdateAction.ResumePlayImmediate] |
  * | 2 | 강제 + Play 에 새 버전 + 즉시 허용 | `StartPlay(IMMEDIATE)` |
  * | 3 | Play 가 내려받은 업데이트 보유 | [UpdateAction.InstallDownloaded] |
@@ -37,16 +44,25 @@ public sealed interface UpdateAction {
  * | 6 | Play 에 새 버전 | 전략([PlayUpdateStrategy]) 선택, 없으면 권장 + 유연 허용 시 `StartPlay(FLEXIBLE)` |
  * | 7 | 그 밖 | [UpdateAction.None] |
  *
- * 출처 조회 실패([ForceUpdateDecision.CheckFailed])는 강제도 권장도 아닌 것으로 본다(fail-open) —
- * 실패 때 막고 싶으면 호출부가 [ForceUpdateDecision] 을 직접 보고 처리한다.
+ * **강제([ForceUpdateDecision.Required])일 때는 1~3번 줄처럼 Play 동작이 나와도 앱 본문을 열면 안 된다.** Play 즉시 업데이트
+ * 화면은 뒤로 가기로 취소되고, 내려받은 업데이트는 설치를 미룰 수 있다. 화면은 [UpdateCheckResult.isUpdateRequired] 로
+ * 차단을 유지하고 그 위에서 Play 동작을 실행한다(update-compose 의 `UpdateUiModel` 이 그렇게 한다).
+ *
+ * 출처 조회 실패([ForceUpdateDecision.CheckFailed])는 [onCheckFailure] 가 막지 않으면 강제도 권장도 아닌 것으로 본다(fail-open).
  */
 public object UpdateActionResolver {
 
+    @JvmStatic
+    @JvmOverloads
     public fun resolve(
         force: ForceUpdateDecision,
         play: PlayUpdateAvailability,
         strategy: PlayUpdateStrategy = DefaultPlayUpdateStrategy(),
+        onCheckFailure: CheckFailurePolicy = CheckFailurePolicy.FAIL_OPEN,
     ): UpdateAction {
+        if (force is ForceUpdateDecision.CheckFailed && onCheckFailure.shouldBlock(force)) {
+            return UpdateAction.BlockUntilCheckSucceeds(force)
+        }
         val required = force as? ForceUpdateDecision.Required
         if (play is PlayUpdateAvailability.ImmediateInProgress) return UpdateAction.ResumePlayImmediate
         if (required != null && play is PlayUpdateAvailability.Available && play.immediateAllowed) {

@@ -53,7 +53,7 @@ public class SharedPreferencesReviewStore @JvmOverloads constructor(
             }
             .putInt(KEY_REQUEST_COUNT, state.requestsInVersion)
             .commit()
-        if (!committed) throw ReviewException("리뷰 카운터를 SharedPreferences 에 저장하지 못했습니다.")
+        if (!committed) throw ReviewPromptException("리뷰 카운터를 SharedPreferences 에 저장하지 못했습니다.")
     }
 
     private fun SharedPreferences.longOrNull(key: String): Long? =

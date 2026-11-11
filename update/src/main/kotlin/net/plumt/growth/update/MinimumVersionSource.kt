@@ -6,13 +6,19 @@ package net.plumt.growth.update
  *
  * ```kotlin
  * val source = MinimumVersionSource {
- *     VersionRequirement(minimumVersionName = remoteConfig.getString("min_version"))
+ *     remoteConfig.fetchAndActivate().await()            // 실패하면 던진다 → SOURCE_UNAVAILABLE
+ *     VersionRequirement(
+ *         minimumVersionName = remoteConfig.getString("min_version"),       // 없는 키의 "" 는 설정 없음
+ *         recommendedVersionName = remoteConfig.getString("latest_version"),
+ *     )
  * }
  * ```
  *
  * 구현 규칙
  * - 아무 요구도 없으면 [VersionRequirement.NONE] 을 돌려준다(`null` 이 아니다)
  * - 출처에 닿지 못했으면 예외를 던진다. 어떤 예외든 [ForceUpdateChecker] 가 [UpdateException] 으로 감싸 [ForceUpdateDecision.CheckFailed] 로 알린다
+ * - 값이 잘못됐으면 [IllegalArgumentException] 을 던진다([VersionRequirement] 생성자가 그렇게 한다) — [CheckFailureReason.INVALID_REQUIREMENT] 가 된다.
+ *   네트워크 오류를 [IllegalArgumentException] 으로 던지면 설정 오류로 분류되니 주의한다
  * - 코루틴 취소는 삼키지 않는다(취소 예외는 그대로 전파된다)
  * - 네트워크 호출이면 자체 타임아웃을 둔다. 라이브러리는 시간을 제한하지 않는다
  */

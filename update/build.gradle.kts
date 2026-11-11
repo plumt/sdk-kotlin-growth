@@ -38,6 +38,8 @@ kotlin {
 dependencies {
     // Flow 를 공개 API 로 노출하므로 coroutines-core 는 api 다. Play 타입은 테스트용 진입점 하나를 빼고 드러내지 않는다
     implementation(libs.play.app.update)
+    // Activity Result 런처(ActivityResultLauncher·IntentSenderRequest)를 받는 시작 경로가 공개 API 라 api 다
+    api(libs.androidx.activity)
     api(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 

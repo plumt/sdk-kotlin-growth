@@ -58,16 +58,39 @@ public sealed interface PlayUpdateResult {
     /** 사용자가 수락했거나 요청이 접수됐다. 즉시 업데이트가 끝나면 앱은 재시작되므로 이 값을 못 받을 수 있다. */
     public data object Accepted : PlayUpdateResult
 
-    /** 사용자가 취소했다. */
+    /** 사용자가 취소했다. 강제 상황이면 차단을 유지하고 다시 안내한다. */
     public data object Canceled : PlayUpdateResult
+
+    /**
+     * Activity Result 런처로 흐름을 띄웠다. 사용자의 선택은 런처 콜백으로 오고([fromActivityResult] 로 바꾼다),
+     * Activity 가 다시 만들어져도 Activity Result API 가 새 인스턴스에 전달한다. 다음 판단은 [AppUpdater.refresh] 로 한다.
+     */
+    public data object Launched : PlayUpdateResult
 
     /** 흐름이 실패했다. 원인은 [cause] 다. */
     public data class Failed(val cause: UpdateException) : PlayUpdateResult
+
+    public companion object {
+        /**
+         * Play 업데이트 흐름을 띄운 Activity Result 런처의 결과 코드를 바꾼다.
+         * `RESULT_OK` → [Accepted], `RESULT_CANCELED` → [Canceled], 그 밖(`RESULT_IN_APP_UPDATE_FAILED` 등) → [Failed].
+         */
+        @JvmStatic
+        public fun fromActivityResult(resultCode: Int): PlayUpdateResult = when (resultCode) {
+            android.app.Activity.RESULT_OK -> Accepted
+            android.app.Activity.RESULT_CANCELED -> Canceled
+            else -> Failed(UpdateException("Play 업데이트 흐름이 실패했습니다. 결과 코드: $resultCode"))
+        }
+    }
 }
 
-/** 유연 업데이트 설치 상태의 종류. */
+/**
+ * 유연 업데이트 설치 상태의 종류.
+ *
+ * [REQUIRES_UI_INTENT] 는 Play 가 사용자 확인 화면을 다시 띄워야 진행할 수 있다는 뜻이다 — 흐름을 다시 시작한다([AppUpdater.refresh] 후 `start`).
+ */
 public enum class PlayInstallStatus {
-    UNKNOWN, PENDING, DOWNLOADING, DOWNLOADED, INSTALLING, INSTALLED, FAILED, CANCELED
+    UNKNOWN, REQUIRES_UI_INTENT, PENDING, DOWNLOADING, DOWNLOADED, INSTALLING, INSTALLED, FAILED, CANCELED
 }
 
 /**

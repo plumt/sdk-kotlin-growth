@@ -15,8 +15,9 @@ import net.plumt.growth.review.internal.installedVersionName
  * review.maybeRequest(activity)                    // 요청해도 좋은 자연스러운 지점에서
  * ```
  *
- * 스레드: 모든 함수는 `suspend` 이고 내부에서 직렬화된다(Mutex). [maybeRequest] 의 Play 호출은 메인 스레드에서 해도 된다.
- * 한 프로세스 안에서 [ReviewPrompt] 를 여럿 만들어 같은 저장소를 쓰면 직렬화가 보장되지 않는다.
+ * 스레드: 모든 함수는 `suspend` 이고 저장소 읽기·쓰기는 내부에서 직렬화된다(Mutex). [maybeRequest] 의 Play 흐름은 잠금 밖에서
+ * 기다리므로 리뷰 카드가 떠 있는 동안에도 기록 함수는 멈추지 않는다. 한 프로세스 안에서 [ReviewPrompt] 를 여럿 만들어
+ * 같은 저장소를 쓰면 직렬화가 보장되지 않는다.
  */
 public interface ReviewPrompt {
 
@@ -38,14 +39,28 @@ public interface ReviewPrompt {
      */
     public suspend fun recordDeclined()
 
-    /** 요청하지 않고 정책 판정만 본다. 요청 버튼 노출 여부 등에 쓴다. */
+    /**
+     * 저장된 카운터를 모두 지운다(첫 실행 기록도 지운다). 디버그 빌드에서 흐름을 다시 시험하거나 사용자 데이터 초기화 때 쓴다.
+     * Play 쪽 쿼터는 지우지 못한다.
+     */
+    public suspend fun reset()
+
+    /**
+     * 요청하지 않고 정책 판정만 본다. 요청 버튼 노출 여부 등에 쓴다.
+     *
+     * @throws ReviewPromptException 저장소·버전 공급자가 실패했을 때(원인은 `cause`)
+     */
     public suspend fun evaluate(): ReviewDecision
 
     /**
      * 정책이 허락하면 Play 리뷰 플로우를 요청하고, 요청을 시도한 사실을 기록한다.
      *
      * 반환은 [ReviewOutcome] 이다. [ReviewOutcome.Requested] 는 "플로우가 끝났다" 일 뿐 다이얼로그가 보였다는 뜻이 아니다.
-     * 플로우가 실패하면 기록하지 않으므로 다음 호출에서 다시 시도한다.
+     * 플로우가 실패하면 기록하지 않으므로 다음 호출에서 다시 시도한다. 저장소·버전 공급자 실패도 던지지 않고 [ReviewOutcome.Failed] 다.
+     * 이미 다른 호출이 흐름을 띄워 두었으면 기다리지 않고 [ReviewOutcome.NotEligible] ([ReviewDenyReason.REQUEST_IN_PROGRESS]) 이다.
+     *
+     * [activity] 의 수명 안에서 끝나도록 `lifecycleScope` 같은 화면 범위 코루틴에서 부른다 — 앱 범위에서 부르면
+     * 흐름이 끝날 때까지 Activity 참조가 남는다.
      */
     public suspend fun maybeRequest(activity: Activity): ReviewOutcome
 
@@ -81,5 +96,5 @@ public sealed interface ReviewOutcome {
     public data object Requested : ReviewOutcome
 
     /** 요청을 끝내지 못했다. 카운터는 바뀌지 않았다. */
-    public data class Failed(val cause: ReviewException) : ReviewOutcome
+    public data class Failed(val cause: ReviewPromptException) : ReviewOutcome
 }

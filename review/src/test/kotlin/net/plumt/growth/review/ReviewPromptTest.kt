@@ -85,7 +85,7 @@ class ReviewPromptTest {
     @Test
     fun `Play 가 실패하면 Failed 이고 기록하지 않아 다시 시도할 수 있다`() = runBlocking {
         makeEligible()
-        launcher.result = ReviewLaunchResult.Failed(ReviewException("실패"))
+        launcher.result = ReviewLaunchResult.Failed(ReviewPromptException("실패"))
         val outcome = prompt.maybeRequest(activity)
         assertTrue(outcome is ReviewOutcome.Failed)
         assertEquals(null, store.load().lastRequestedAtMillis)

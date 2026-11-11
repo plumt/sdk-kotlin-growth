@@ -22,16 +22,16 @@ public class PlayReviewLauncher internal constructor(
 ) : ReviewLauncher {
 
     override suspend fun launch(activity: Activity): ReviewLaunchResult = try {
-        val info = requestInfo().getOrElse { return ReviewLaunchResult.Failed(it.asReviewException("리뷰 정보를 가져오지 못했습니다.")) }
+        val info = requestInfo().getOrElse { return ReviewLaunchResult.Failed(it.asReviewPromptException("리뷰 정보를 가져오지 못했습니다.")) }
         launchFlow(activity, info).onFailure {
-            return ReviewLaunchResult.Failed(it.asReviewException("리뷰 플로우를 시작하지 못했습니다."))
+            return ReviewLaunchResult.Failed(it.asReviewPromptException("리뷰 플로우를 시작하지 못했습니다."))
         }
         ReviewLaunchResult.FlowFinished
     } catch (e: CancellationException) {
         throw e
     } catch (e: Exception) {
         // Task 를 만들기 전에 던지는 경우(종료 중인 Activity 등)
-        ReviewLaunchResult.Failed(e.asReviewException("Play 리뷰 플로우가 실패했습니다."))
+        ReviewLaunchResult.Failed(e.asReviewPromptException("Play 리뷰 플로우가 실패했습니다."))
     }
 
     // 실패를 예외로 재개하면 코루틴의 스택 트레이스 복구가 예외를 복제해 cause 가 바뀐다 — Result 값으로 넘긴다
@@ -48,7 +48,7 @@ public class PlayReviewLauncher internal constructor(
     private fun <T> Task<T>.toResult(): Result<T> =
         if (isSuccessful) Result.success(result) else Result.failure(exception ?: IllegalStateException("Task 가 원인 없이 실패했습니다."))
 
-    private fun Throwable.asReviewException(message: String): ReviewException = ReviewException(message, this)
+    private fun Throwable.asReviewPromptException(message: String): ReviewPromptException = ReviewPromptException(message, this)
 
     public companion object {
         /** Play 가 제공하는 실제 [ReviewManager] 로 만든다. */

@@ -53,6 +53,9 @@ public enum class ReviewDenyReason {
 
     /** 이 앱 버전에서 [DefaultReviewPolicy.Config.maxRequestsPerVersion] 번 요청했다. */
     VERSION_LIMIT_REACHED,
+
+    /** 정책이 아니라 [ReviewPrompt] 가 붙이는 이유 — 같은 [ReviewPrompt] 의 다른 [ReviewPrompt.maybeRequest] 가 Play 흐름을 띄워 둔 상태다. */
+    REQUEST_IN_PROGRESS,
 }
 
 /**

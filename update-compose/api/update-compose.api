@@ -62,8 +62,11 @@ public final class net/plumt/growth/update/compose/UpdateGateTags {
 public final class net/plumt/growth/update/compose/UpdateTexts {
 	public static final field $stable I
 	public static final field Companion Lnet/plumt/growth/update/compose/UpdateTexts$Companion;
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
+	public final fun component10 ()Ljava/lang/String;
+	public final fun component11 ()Ljava/lang/String;
+	public final fun component12 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Ljava/lang/String;
@@ -72,9 +75,11 @@ public final class net/plumt/growth/update/compose/UpdateTexts {
 	public final fun component7 ()Ljava/lang/String;
 	public final fun component8 ()Ljava/lang/String;
 	public final fun component9 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lnet/plumt/growth/update/compose/UpdateTexts;
-	public static synthetic fun copy$default (Lnet/plumt/growth/update/compose/UpdateTexts;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lnet/plumt/growth/update/compose/UpdateTexts;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lnet/plumt/growth/update/compose/UpdateTexts;
+	public static synthetic fun copy$default (Lnet/plumt/growth/update/compose/UpdateTexts;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lnet/plumt/growth/update/compose/UpdateTexts;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCheckFailedMessage ()Ljava/lang/String;
+	public final fun getCheckFailedTitle ()Ljava/lang/String;
 	public final fun getConfirm ()Ljava/lang/String;
 	public final fun getInstall ()Ljava/lang/String;
 	public final fun getLater ()Ljava/lang/String;
@@ -84,6 +89,7 @@ public final class net/plumt/growth/update/compose/UpdateTexts {
 	public final fun getReadyTitle ()Ljava/lang/String;
 	public final fun getRequiredMessage ()Ljava/lang/String;
 	public final fun getRequiredTitle ()Ljava/lang/String;
+	public final fun getRetry ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -94,24 +100,37 @@ public final class net/plumt/growth/update/compose/UpdateTexts$Companion {
 
 public abstract interface class net/plumt/growth/update/compose/UpdateUiModel {
 	public static final field Companion Lnet/plumt/growth/update/compose/UpdateUiModel$Companion;
-	public static fun from (Lnet/plumt/growth/update/UpdateAction;)Lnet/plumt/growth/update/compose/UpdateUiModel;
 	public static fun from (Lnet/plumt/growth/update/UpdateCheckResult;)Lnet/plumt/growth/update/compose/UpdateUiModel;
 }
 
 public final class net/plumt/growth/update/compose/UpdateUiModel$Blocking : net/plumt/growth/update/compose/UpdateUiModel {
 	public static final field $stable I
-	public fun <init> (Lnet/plumt/growth/update/UpdateAction$BlockUntilStoreUpdate;)V
-	public final fun component1 ()Lnet/plumt/growth/update/UpdateAction$BlockUntilStoreUpdate;
-	public final fun copy (Lnet/plumt/growth/update/UpdateAction$BlockUntilStoreUpdate;)Lnet/plumt/growth/update/compose/UpdateUiModel$Blocking;
-	public static synthetic fun copy$default (Lnet/plumt/growth/update/compose/UpdateUiModel$Blocking;Lnet/plumt/growth/update/UpdateAction$BlockUntilStoreUpdate;ILjava/lang/Object;)Lnet/plumt/growth/update/compose/UpdateUiModel$Blocking;
+	public fun <init> (Lnet/plumt/growth/update/ForceUpdateDecision$Required;Lnet/plumt/growth/update/UpdateAction;)V
+	public final fun component1 ()Lnet/plumt/growth/update/ForceUpdateDecision$Required;
+	public final fun component2 ()Lnet/plumt/growth/update/UpdateAction;
+	public final fun copy (Lnet/plumt/growth/update/ForceUpdateDecision$Required;Lnet/plumt/growth/update/UpdateAction;)Lnet/plumt/growth/update/compose/UpdateUiModel$Blocking;
+	public static synthetic fun copy$default (Lnet/plumt/growth/update/compose/UpdateUiModel$Blocking;Lnet/plumt/growth/update/ForceUpdateDecision$Required;Lnet/plumt/growth/update/UpdateAction;ILjava/lang/Object;)Lnet/plumt/growth/update/compose/UpdateUiModel$Blocking;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAction ()Lnet/plumt/growth/update/UpdateAction$BlockUntilStoreUpdate;
+	public final fun getAction ()Lnet/plumt/growth/update/UpdateAction;
+	public final fun getOpensStore ()Z
+	public final fun getRequired ()Lnet/plumt/growth/update/ForceUpdateDecision$Required;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/growth/update/compose/UpdateUiModel$CheckFailed : net/plumt/growth/update/compose/UpdateUiModel {
+	public static final field $stable I
+	public fun <init> (Lnet/plumt/growth/update/ForceUpdateDecision$CheckFailed;)V
+	public final fun component1 ()Lnet/plumt/growth/update/ForceUpdateDecision$CheckFailed;
+	public final fun copy (Lnet/plumt/growth/update/ForceUpdateDecision$CheckFailed;)Lnet/plumt/growth/update/compose/UpdateUiModel$CheckFailed;
+	public static synthetic fun copy$default (Lnet/plumt/growth/update/compose/UpdateUiModel$CheckFailed;Lnet/plumt/growth/update/ForceUpdateDecision$CheckFailed;ILjava/lang/Object;)Lnet/plumt/growth/update/compose/UpdateUiModel$CheckFailed;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getFailure ()Lnet/plumt/growth/update/ForceUpdateDecision$CheckFailed;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class net/plumt/growth/update/compose/UpdateUiModel$Companion {
-	public final fun from (Lnet/plumt/growth/update/UpdateAction;)Lnet/plumt/growth/update/compose/UpdateUiModel;
 	public final fun from (Lnet/plumt/growth/update/UpdateCheckResult;)Lnet/plumt/growth/update/compose/UpdateUiModel;
 }
 

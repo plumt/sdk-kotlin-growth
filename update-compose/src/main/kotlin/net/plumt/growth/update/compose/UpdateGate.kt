@@ -34,7 +34,7 @@ public data class UpdateDialogSpec(
     val onDismiss: () -> Unit,
 )
 
-/** 차단 화면 슬롯이 받는 값. 닫는 동작이 없다 — 업데이트 외의 탈출구를 만들지 않는다. */
+/** 차단 화면 슬롯이 받는 값. 닫는 동작이 없다 — 업데이트(또는 다시 확인) 외의 탈출구를 만들지 않는다. */
 public data class BlockingSpec(
     val title: String,
     val message: String,
@@ -45,14 +45,16 @@ public data class BlockingSpec(
 /**
  * 업데이트 안내를 [content] 위에 얹는 게이트.
  *
- * - [UpdateUiModel.Blocking] 이면 [content] 를 **그리지 않고** [blocking] 슬롯만 그린다(강제 업데이트)
+ * - [UpdateUiModel.Blocking]·[UpdateUiModel.CheckFailed] 이면 [content] 를 **그리지 않고** [blocking] 슬롯만 그린다.
+ *   강제 업데이트 중 Play 즉시 업데이트 화면을 띄울 때도 그 아래는 차단 화면이라, Play 화면을 뒤로 가기로 닫아도 본문이 드러나지 않는다
  * - [UpdateUiModel.Optional]·[UpdateUiModel.ReadyToInstall] 이면 [content] 위에 [dialog] 슬롯을 띄운다
  * - [UpdateUiModel.Hidden] 이면 [content] 만 그린다
  *
  * 두 슬롯의 기본값은 Material 3 구현이고, 앱의 디자인 시스템으로 통째로 교체할 수 있다.
  * 차단 화면은 시스템 뒤로 가기를 막지 않는다(앱이 닫히는 것은 업데이트 우회가 아니다).
  *
- * @param onConfirm 확인 — [UpdateUiModel.Optional]·[UpdateUiModel.Blocking] 에서는 업데이트 시작/스토어 열기, [UpdateUiModel.ReadyToInstall] 에서는 설치
+ * @param onConfirm 확인 — [UpdateUiModel.Optional] 에서는 업데이트 시작, [UpdateUiModel.Blocking] 에서는 그 `action` 실행(Play 흐름 또는 스토어 열기),
+ *   [UpdateUiModel.ReadyToInstall] 에서는 설치, [UpdateUiModel.CheckFailed] 에서는 다시 확인
  * @param onDismiss 다이얼로그를 거절했을 때(차단 화면에는 없다)
  */
 @Composable
@@ -69,6 +71,9 @@ public fun UpdateGate(
     when (model) {
         is UpdateUiModel.Blocking -> blocking(
             BlockingSpec(texts.requiredTitle, texts.requiredMessage, texts.confirm, onConfirm),
+        )
+        is UpdateUiModel.CheckFailed -> blocking(
+            BlockingSpec(texts.checkFailedTitle, texts.checkFailedMessage, texts.retry, onConfirm),
         )
         else -> {
             content()

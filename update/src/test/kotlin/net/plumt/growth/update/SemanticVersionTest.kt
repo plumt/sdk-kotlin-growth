@@ -18,6 +18,14 @@ class SemanticVersionTest {
     }
 
     @Test
+    fun `한 자리 버전도 비교한다`() {
+        assertTrue(v("2") > v("1"))
+        assertTrue(v("1") < v("1.0.1"))
+        assertEquals(v("1"), v("1.0.0"))
+        assertTrue(v("10") > v("9.9.9"))
+    }
+
+    @Test
     fun `모자란 구간은 0 으로 보고 같다`() {
         assertEquals(v("1.2"), v("1.2.0"))
         assertEquals(v("1.2"), v("1.2.0.0"))
@@ -55,5 +63,25 @@ class SemanticVersionTest {
             assertTrue(e.message!!.contains("\"$it\""))
             assertNull(SemanticVersion.parseOrNull(it))
         }
+    }
+
+    @Test
+    fun `L4 사전 릴리스 숫자 식별자의 선행 0 은 거부하고 0 과 영숫자 식별자는 허용한다`() {
+        listOf("1.0.0-01", "1.0.0-00", "1.0.0-rc.01", "1.0.0-0.007").forEach {
+            assertThrows(it, IllegalArgumentException::class.java) { SemanticVersion.parse(it) }
+        }
+        listOf("1.0.0-0", "1.0.0-0a", "1.0.0-01a", "1.0.0-rc.0", "1.0.0-10.x-y", "1.0.0--").forEach {
+            assertEquals(it, SemanticVersion.parse(it).toString())
+        }
+    }
+
+    @Test
+    fun `L4 같은 버전은 해시도 같다`() {
+        val pairs = listOf("1.0.0-1" to "1.0-1", "1.2" to "1.2.0.0", "1.0.0-rc.1+a" to "1.0.0-rc.1+b")
+        pairs.forEach { (a, b) ->
+            assertEquals(SemanticVersion.parse(a), SemanticVersion.parse(b))
+            assertEquals("$a / $b", SemanticVersion.parse(a).hashCode(), SemanticVersion.parse(b).hashCode())
+        }
+        assertEquals(1, hashSetOf(SemanticVersion.parse("2.0-1"), SemanticVersion.parse("2.0.0-1")).size)
     }
 }

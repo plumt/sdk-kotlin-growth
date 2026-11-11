@@ -39,8 +39,9 @@ dependencies {
     api(project(":update"))
 
     val bom = platform(libs.androidx.compose.bom)
-    implementation(bom)
-    implementation(libs.androidx.compose.ui)
+    // 공개 API 가 Modifier·@Composable 을 드러내므로 compose-ui 는 api 다(BOM 도 함께 전달한다)
+    api(bom)
+    api(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui.tooling.preview)
 

@@ -9,4 +9,7 @@
     <string name="growth_update_confirm">업데이트</string>
     <string name="growth_update_install">다시 시작</string>
     <string name="growth_update_later">나중에</string>
+    <string name="growth_update_check_failed_title">업데이트를 확인하지 못했어요</string>
+    <string name="growth_update_check_failed_message">인터넷 연결을 확인하고 다시 시도해 주세요.</string>
+    <string name="growth_update_retry">다시 시도</string>
 </resources>

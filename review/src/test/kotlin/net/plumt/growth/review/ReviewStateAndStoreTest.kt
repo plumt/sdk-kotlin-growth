@@ -101,7 +101,7 @@ class ReviewStateAndStoreTest {
     }
 
     @Test
-    fun `commit 이 실패하면 ReviewException`() {
+    fun `commit 이 실패하면 ReviewPromptException`() {
         val failing = object : ContextWrapper(context) {
             override fun getApplicationContext(): Context = this
             override fun getSharedPreferences(name: String?, mode: Int): SharedPreferences {
@@ -120,17 +120,17 @@ class ReviewStateAndStoreTest {
                 }
             }
         }
-        val e = assertThrows(ReviewException::class.java) { runBlocking { SharedPreferencesReviewStore(failing, "t5").save(full) } }
+        val e = assertThrows(ReviewPromptException::class.java) { runBlocking { SharedPreferencesReviewStore(failing, "t5").save(full) } }
         assertTrue(e.message!!.contains("SharedPreferences"))
     }
 
     @Test
-    fun `ReviewException 은 원인과 메시지를 보존한다`() {
+    fun `ReviewPromptException 은 원인과 메시지를 보존한다`() {
         val cause = RuntimeException("x")
-        val e = ReviewException("m", cause)
+        val e = ReviewPromptException("m", cause)
         assertEquals("m", e.message)
         assertEquals(cause, e.cause)
-        assertNull(ReviewException("n").cause)
+        assertNull(ReviewPromptException("n").cause)
     }
 
     @Test

@@ -96,8 +96,8 @@ class ReviewPromptScenarioTest {
     }
 
     @Test
-    fun `ReviewException 을 던지는 저장소는 감싸지 않는다`() = runBlocking<Unit> {
-        val own = ReviewException("직접")
+    fun `ReviewPromptException 을 던지는 저장소는 감싸지 않는다`() = runBlocking<Unit> {
+        val own = ReviewPromptException("직접")
         val store = object : ReviewStore {
             override suspend fun load(): ReviewState = throw own
             override suspend fun save(state: ReviewState) = Unit
@@ -153,12 +153,12 @@ class ReviewPromptScenarioTest {
     }
 
     @Test
-    fun `versionName 이 없으면 ReviewException`() {
+    fun `versionName 이 없으면 ReviewPromptException`() {
         val info: PackageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
         info.versionName = null
         shadowOf(context.packageManager).installPackage(info)
         val p = ReviewPrompt.create(context = context, store = InMemoryReviewStore(), launcher = Launcher(), clock = Clock())
-        val e = assertThrows(ReviewException::class.java) { runBlocking { p.evaluate() } }
+        val e = assertThrows(ReviewPromptException::class.java) { runBlocking { p.evaluate() } }
         assertTrue(e.message!!.contains("versionName"))
     }
 

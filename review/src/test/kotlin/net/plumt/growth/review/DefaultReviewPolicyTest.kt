@@ -184,7 +184,7 @@ class DefaultReviewPolicyTest {
     }
 
     @Test
-    fun `모든 거부 이유는 도달 가능하다`() {
+    fun `정책이 내는 거부 이유는 모두 도달 가능하다`() {
         val reached = setOf(
             decide(eligible.copy(firstLaunchAtMillis = null)),
             decide(eligible.copy(firstLaunchAtMillis = now)),
@@ -195,6 +195,7 @@ class DefaultReviewPolicyTest {
             decide(eligible.copy(lastRequestedAtMillis = now - day)),
             decide(eligible.copy(versionOfRequests = version, requestsInVersion = 1)),
         ).map { (it as ReviewDecision.Deny).reason }.toSet()
-        assertEquals(ReviewDenyReason.values().toSet(), reached)
+        // REQUEST_IN_PROGRESS 는 정책이 아니라 ReviewPrompt 가 붙인다(ReviewRegressionTest)
+        assertEquals(ReviewDenyReason.values().toSet() - ReviewDenyReason.REQUEST_IN_PROGRESS, reached)
     }
 }
