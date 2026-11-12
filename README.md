@@ -176,6 +176,11 @@ suspend fun render(result: UpdateCheckResult) {
 취소되고, 내려받은 업데이트는 미룰 수 있고, 흐름 중 Activity 가 재생성되면 결과가 사라진다. `UpdateCheckResult.isBlocking` 이 `true` 인 동안
 차단 화면을 유지하고 그 위에서 Play 동작을 실행한다. Play 흐름이 취소·실패해도 차단은 풀리지 않는다(update-compose 가 그렇게 한다).
 
+**최소 버전은 스토어 반영을 확인한 뒤에 올린다.** Play 에 출시해도 사용자 기기에 새 버전이 보이기까지 시간이 걸린다.
+그 전에 원격 최소 버전을 올리면 Play 에 새 버전이 없어 4번 줄 `BlockUntilStoreUpdate` 가 되고, 사용자는 스토어에서도 업데이트할 수 없는 채로
+차단 화면에 갇힌다. 순서는 ① 새 버전 출시 → ② 실제 기기의 Play 에서 새 버전이 보이는지 확인 → ③ 최소 버전 올리기다.
+단계적 출시(staged rollout) 중이면 아직 받지 못한 사용자가 갇히므로 100% 출시 뒤에 올린다. 서두를 필요가 없으면 권장 버전부터 올린다.
+
 원격 판정 실패(`CheckFailed`)의 기본은 fail-open(오프라인·일시 장애로 앱을 막지 않음)이다. 실패는 `result.force` 에 남는다.
 막으려면 `AppUpdater.create(onCheckFailure = ...)`:
 
